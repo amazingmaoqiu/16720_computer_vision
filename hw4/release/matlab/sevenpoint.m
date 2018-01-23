@@ -20,18 +20,7 @@ A =[pts22(:,1).*pts11(:,1),pts22(:,1).*pts11(:,2),pts22(:,1),pts22(:,2).*pts11(:
 [~,~,V] = svd(A);
 F1 = reshape(V(:,8),[3,3])';
 F2 = reshape(V(:,9),[3,3])';
-% [U1,S1,V1] = svd(F1);
-% [U2,S2,V2] = svd(F2);
-% S1(3,3) = 0;
-% S2(3,3) = 0;
-% F1 = U1*S1*V1';
-% F2 = U2*S2*V2';
-% F1 = refineF(F1,pts11(:,1:2),pts22(:,1:2));
-% F2 = refineF(F2,pts22(:,1:2),pts22(:,1:2));
-% F1 = T'*F1*T;
-% F2 = T'*F2*T;
-% [~,V3] = eig(inv(F2)*F1);
-% lamda = diag(V3);
+
 syms h;
 y=det(F1+h*F2);
 lamda=double(solve(y));
@@ -40,20 +29,15 @@ lamda = real(lamda);
 
 if(lamda(1) == lamda(2))
     F = cell(1);
-%     F{1} = F1 + lamda(3)*F2;
     F{1} = refineF(F1 + lamda(3)*F2,pts11(:,1:2),pts22(:,1:2));
     F{1} = T'*F{1}*T;
 else
     if(lamda(3) == lamda(2))
     F = cell(1);
-%     F{1} = F1 + lamda(3)*F2;
     F{1} = refineF(F1 + lamda(1)*F2,pts11(:,1:2),pts22(:,1:2));
     F{1} = T'*F{1}*T;
 else
     F = cell([3,1]);
-%     F{1} = F1 + lamda(1)*F2;
-%     F{2} = F1 + lamda(2)*F2;
-%     F{3} = F1 + lamda(3)*F2;
     F{1} = refineF(F1 + lamda(1)*F2,pts11(:,1:2),pts22(:,1:2));
     F{1} = T'*F{1}*T;
     F{2} = refineF(F1 + lamda(2)*F2,pts11(:,1:2),pts22(:,1:2));
