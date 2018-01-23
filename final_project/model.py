@@ -268,7 +268,7 @@ def interpret(outputs, img, img_name):
 	height, width, _ = img.shape
 	img_dims = np.stack([height, width, height, width])
 	img_dims = np.reshape(img_dims, [1,4])
-	boxes = np.transpose(boxes, [1,2,3,0])#boxes.shape => [19x19x5x4], more easy to operate later
+	boxes = np.transpose(boxes, [1,2,3,0])  #boxes.shape => [19x19x5x4], more easy to operate later
 
 	boxes = boxes * img_dims
 
@@ -338,65 +338,9 @@ def main():
 	img1 = cv2.resize(img1, (608, 608)).astype(np.float32)
 	img1 = (img1 / 255.0)
 
-
-	
-	# test = img1[np.newaxis,...]
-	# layer_outs = functor([test, 1.])
-# # # 	# print layer_outs
-# 	outputs = layer_outs[-1]
-	# print(outputs.shape)
-
-	inputs = np.expand_dims(img1, 0);
-	outputs1 = model.predict(inputs)
-
-	# for i in range(len(model.layers)):
-	# 	print(model.layers[i].output)
-
 	interpret(outputs1[0,:,:,:], img, img_name)
 	
 
-# def main():
-
-# 	cell_size = 19
-# 	box_per_cell = 5
-# 	num_class = 80
-
-
-# 	img_name = sys.argv[1]
-# 	print(img_name)
-# 	img = cv2.imread(img_name)
-# 	img_h, img_w, _ = img.shape
-# # 	print(img_h, img_w)
-# 	img = cv2.resize(img, (608, 608)).astype(np.float32)
-# 	img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
-# 	img = (img / 255.0) * 2.0 - 1.0
-# # 	# print(img)
-# # 	# cv2.waitKey(0)
-# # 	# cv2.destroyAllWindows()
-# # 	# print(img.shape)
-# # 	# img = np.reshape(img, (1,416,416,3))
-# # 	is_training = False
-# 	model = YOLO2.generate_net()
-
-# # 	# for layer in model.layers:
-# # 	# 	print(layer.output)
-
-# 	inp = model.input                                           # input placeholder
-# 	outputs = [layer.output for layer in model.layers]          # all layer outputs
-# 	functor = K.function([inp]+ [K.learning_phase()], outputs ) # evaluation function
-
-# # 	# Testing
-# 	test = img[np.newaxis,...]
-# 	layer_outs = functor([test, 1.])
-# # 	# print layer_outs
-# 	outputs = layer_outs[-1]
-# 	print(outputs.shape)
-# # 	interpret(outputs[0,:,:,:])
-
-
-	# optimizer = SGD()
-	# model.compile(optimizer = optimizer, loss = 'categorical_crossentropy', metrics = ["accuracy"])
-	# out = model.predict(img)
 
 if __name__ == "__main__":
 	main()
