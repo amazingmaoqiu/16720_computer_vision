@@ -17,12 +17,12 @@ from keras import backend as K
 
 
 class YOLO2(object):
-	# def __init__(self, is_training):
-	# 	self.classes = cfg.classes
-	# 	# self.num_class = len(self.classes)
-	# 	# self.img_size = cfg.img_size
-	# 	# self.cell_size = cfg.cell_size
-	# 	return self.generate_net()
+	def __init__(self, is_training):
+		self.classes = cfg.classes
+		self.num_class = len(self.classes)
+	 	self.img_size = cfg.img_size
+	 	self.cell_size = cfg.cell_size
+		return self.generate_net()
 
 	@staticmethod
 	def generate_tiny_net():
