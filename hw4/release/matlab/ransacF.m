@@ -36,9 +36,5 @@ for i=1:50
        end 
    end
 end
-% clear p1 p2;
-% p1 = [pts1(inliers,:),ones(max_number_inliers,1)];
-% p2 = [pts2(inliers,:),ones(max_number_inliers,1)];
-% F = sevenpoint(p1,p2,M);
 end
 
