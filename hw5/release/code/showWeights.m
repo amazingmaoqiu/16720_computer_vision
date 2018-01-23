@@ -1,0 +1,31 @@
+layers = [1024,800,36];
+[W0,b0] = InitializeNetwork(layers);
+load('nist36_model.mat');
+w0 = W0{1};
+w1 = W{1};
+w0 = w0';
+w0 = reshape(w0,[32,32,800]);
+w1 = w1';
+w1 = reshape(w1,[32,32,800]);
+for i = 1:800
+    temp0 = w0(:,:,i);
+    temp1 = w1(:,:,i);
+    small0 = min(min(temp0));
+    temp0 = temp0 - small0;
+    small1 = min(min(temp1));
+    temp1 = temp1 - small1;
+    big0 = max(max(temp0));
+    big1 = max(max(temp1));
+    temp0 = floor(temp0*255/big0);
+    temp1 = floor(temp1*255/big1);
+%     temp0 = uint8(temp0);
+%     temp1 = uint8(temp1);
+    w0(:,:,i) = temp0;
+    w1(:,:,i) = temp1;
+end
+w0 = uint8(reshape(w0,[32,32,1,800]));
+w1 = uint8(reshape(w1,[32,32,1,800]));
+figure(1);
+montage(w0,'Size',[29,29]);
+figure(2);
+montage(w1,'Size',[29,29]);
